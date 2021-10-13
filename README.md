@@ -12,6 +12,21 @@ npm run ipfs
 yarn ipfs
 ```
 
+example output
+```
+yarn run v1.22.11
+$ node scripts/ipfs.js
+🛰  Sending to IPFS...
+📡 App deployed to IPFS with hash: QmT22xAiXCudX17sEcWyhyJkSULXKnQ3gvHkxzubeNAc1T
+
+🚀 Deployment to IPFS complete!
+
+Use the link below to access your app:
+   IPFS: https://ipfs.infura.io/ipfs/QmT22xAiXCudX17sEcWyhyJkSULXKnQ3gvHkxzubeNAc1T
+
+✨  Done in 14.39s.
+```
+
 ## Getting Started
 
 First, run the development server:

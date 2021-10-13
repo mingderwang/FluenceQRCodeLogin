@@ -5,9 +5,11 @@
   "scripts": {
     "pre": "npm run-script build",
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel": "vercel",
+    "ipfs": "node scripts/ipfs.js"
   },
   "dependencies": {
     "daisyui": "^1.14.3",
@@ -20,6 +22,7 @@
     "autoprefixer": "^10.3.7",
     "eslint": "8.0.0",
     "eslint-config-next": "11.1.2",
+    "ipfs-http-client": "49.0.2",
     "postcss": "^8.3.9",
     "tailwindcss": "^2.2.16",
     "typescript": "4.4.3"

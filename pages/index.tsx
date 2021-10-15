@@ -11,7 +11,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button className="btn btn-primary">daisyUI Button</button>
+      <button className="btn btn-secondary rounded-full">daisyUI Button</button>
+      <button className="btn btn-primary rounded-full">daisyUI Button</button>
 
       <footer className="primary">
         <a
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '} MS-hack
+          Powered by MS-hack
         </a>
       </footer>
     </div>

@@ -1,8 +1,24 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import { useEffect } from 'react'
+import { EthereumAuthProvider, SelfID } from '@self.id/web'
 
 const Home: NextPage = () => {
+  useEffect(async () => {
+    const addresses = await window.ethereum.enable()
+    // "local" | "mainnet-gateway" | "testnet-clay" | "testnet-clay-gateway"
+    // https://developers.ceramic.network/learn/networks/
+    const self = await SelfID.authenticate({
+      authProvider: new EthereumAuthProvider(window.ethereum, addresses[0]),
+      ceramic: 'testnet-clay',
+      connectNetwork: 'testnet-clay',
+    })
+    console.log('self', self)
+    //await self.set('basicProfile', { name: 'Ming-der Wang' })
+    const ming = await self.get('basicProfile')
+    console.log(ming)
+  }, [])
+
   return (
     <div className="primary">
       <Head>
@@ -11,8 +27,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button className="btn btn-secondary rounded-full">daisyUI Button</button>
-      <button className="btn btn-primary rounded-full">daisyUI Button</button>
+      <button className="btn btn-secondary rounded-full">connect</button>
 
       <footer className="primary">
         <a

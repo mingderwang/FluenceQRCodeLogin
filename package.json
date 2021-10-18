@@ -1,6 +1,6 @@
 {
-  "name": "selfid-fluence-login",
-  "version": "0.1.1",
+  "name": "FluenceQRCodeLogin",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "pre": "npm run-script build",

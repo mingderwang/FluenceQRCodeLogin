@@ -1,5 +1,6 @@
 # FluenceQRCodeLogin
-
+> refer to https://github.com/fluencelabs/examples/tree/main/quickstart/1-browser-to-browser
+add Self.ID login for helloworld Fluence service
 
 # Build and Run
 

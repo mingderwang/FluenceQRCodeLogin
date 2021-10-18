@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { EthereumAuthProvider, SelfID } from '@self.id/web'
 import { sayHello, registerHelloPeer } from '../_aqua/getting-started'
-import { Fluence } from '@fluencelabs/fluence'
+import { Fluence, PeerStatus } from '@fluencelabs/fluence'
 import { krasnodar } from '@fluencelabs/fluence-network-environment'
 declare let window: any
 const relayNodes = [krasnodar[0], krasnodar[1], krasnodar[2]]

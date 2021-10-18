@@ -12,7 +12,7 @@
     "ipfs": "node scripts/ipfs.js"
   },
   "dependencies": {
-    "@fluencelabs/aqua-lib":"^0.1.14",
+    "@fluencelabs/aqua-lib": "^0.1.14",
     "@fluencelabs/fluence": "^0.13.0",
     "@fluencelabs/fluence-network-environment": "^1.0.10",
     "@self.id/web": "^0.1.0",
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/react": "17.0.27",
     "autoprefixer": "^10.3.7",
-    "eslint": "8.0.0",
+    "eslint": "^8.0.1",
     "eslint-config-next": "11.1.2",
     "ipfs-http-client": "49.0.2",
     "postcss": "^8.3.9",

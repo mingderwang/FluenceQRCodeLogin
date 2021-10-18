@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { EthereumAuthProvider, SelfID } from '@self.id/web'
-import { sayHello, registerHelloPeer } from './_aqua/getting-started'
+import { sayHello, registerHelloPeer } from '../_aqua/getting-started'
 import { Fluence } from '@fluencelabs/fluence'
 import { krasnodar } from '@fluencelabs/fluence-network-environment'
 declare let window: any
@@ -14,6 +14,8 @@ const Home: NextPage = () => {
   const [helloMessage, setHelloMessage] = useState<string | null>(null)
   const [peerIdInput, setPeerIdInput] = useState<string>('')
   const [relayPeerIdInput, setRelayPeerIdInput] = useState<string>('')
+  const [peerId, setPeerId] = useState('')
+  const [relayPeerId, setRelayPeerId] = useState('')
 
   const connect = async (relayPeerId: string) => {
     try {
@@ -27,6 +29,10 @@ const Home: NextPage = () => {
           return 'Hello back to you, \n' + from
         },
       })
+      const x: PeerStatus = Fluence.getStatus()
+      console.log('status', x)
+      setRelayPeerId(x.relayPeerId)
+      setPeerId(x.peerId)
     } catch (err) {
       console.log('Peer initialization failed', err)
     }
@@ -38,6 +44,7 @@ const Home: NextPage = () => {
     }
     // Using aqua is as easy as calling a javascript funсtion
     const res = await sayHello(peerIdInput, relayPeerIdInput)
+    console.log('res', res)
     setHelloMessage(res)
   }
   const buttonHandler = async () => {
@@ -81,9 +88,9 @@ const Home: NextPage = () => {
       </ul>
 
       <div className="row">
-        <label className="label bold">Target peer id</label>
+        <label className="label bold h-24">Target peer id</label>
         <input
-          className="input"
+          className="input input-lg"
           type="text"
           onChange={(e) => setPeerIdInput(e.target.value)}
           value={peerIdInput}
@@ -127,10 +134,25 @@ const Home: NextPage = () => {
             target="did uniresolver"
             rel="noopener noreferrer"
           >
-            click here -{'>'} Be your self
+            🐝 Click here -{'>'} Be your self
           </a>
         </div>
-        <p>{isConnected}</p>
+
+        {isConnected ? (
+          <>
+            <h1>
+              connected, peer Id:
+              {peerId}
+            </h1>
+            <h1>
+              relay peer Id:
+              {relayPeerId}
+            </h1>
+          </>
+        ) : (
+          <h1>disconnected</h1>
+        )}
+        <h1>{helloMessage}</h1>
       </footer>
     </div>
   )

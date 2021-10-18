@@ -12,7 +12,7 @@ function App({ Component, pageProps }: AppProps) {
           </Link>
         </li>
         <li>
-          <Link href="/profile">
+          <Link href="/fluenceHello">
             <a>profile</a>
           </Link>
         </li>

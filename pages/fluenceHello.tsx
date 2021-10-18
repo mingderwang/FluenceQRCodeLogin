@@ -14,8 +14,8 @@ const Home: NextPage = () => {
   const [helloMessage, setHelloMessage] = useState<string | null>(null)
   const [peerIdInput, setPeerIdInput] = useState<string>('')
   const [relayPeerIdInput, setRelayPeerIdInput] = useState<string>('')
-  const [peerId, setPeerId] = useState('')
-  const [relayPeerId, setRelayPeerId] = useState('')
+  const [peerId, setPeerId] = useState<string | null>('')
+  const [relayPeerId, setRelayPeerId] = useState<string | null>('')
 
   const connect = async (relayPeerId: string) => {
     try {

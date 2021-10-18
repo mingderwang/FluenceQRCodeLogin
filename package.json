@@ -12,6 +12,9 @@
     "ipfs": "node scripts/ipfs.js"
   },
   "dependencies": {
+    @fluencelabs/aqua-lib/builtin.aqua":"*",
+    "@fluencelabs/fluence": "^0.13.0",
+    "@fluencelabs/fluence-network-environment": "^1.0.10",
     "@self.id/web": "^0.1.0",
     "daisyui": "^1.14.3",
     "next": "11.1.2",

@@ -1,22 +1,29 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { EthereumAuthProvider, SelfID } from '@self.id/web'
-
+declare let window: any
 const Home: NextPage = () => {
-  useEffect(async () => {
+  const [did, setDid] = useState('')
+
+  const buttonHandler = async () => {
+    console.log('onClick')
     const addresses = await window.ethereum.enable()
     // "local" | "mainnet-gateway" | "testnet-clay" | "testnet-clay-gateway"
     // https://developers.ceramic.network/learn/networks/
-    const self = await SelfID.authenticate({
+    SelfID.authenticate({
       authProvider: new EthereumAuthProvider(window.ethereum, addresses[0]),
       ceramic: 'testnet-clay',
       connectNetwork: 'testnet-clay',
+    }).then(async (did: SelfID) => {
+      setDid(did.id)
+      const ming = await did.get('basicProfile')
+      console.log(ming)
     })
-    console.log('self', self)
     //await self.set('basicProfile', { name: 'Ming-der Wang' })
-    const ming = await self.get('basicProfile')
-    console.log(ming)
+  }
+  useEffect(() => {
+    console.log('onStart')
   }, [])
 
   return (
@@ -27,15 +34,28 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button className="btn btn-secondary rounded-full">connect</button>
-
+      <button
+        onClick={buttonHandler}
+        className="btn btn-secondary rounded-full"
+      >
+        get my did info
+      </button>
+      <p>{did}</p>
       <footer className="primary">
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://muzamint.com"
           target="_blank"
           rel="noopener noreferrer"
         >
           Powered by MS-hack
+        </a>
+        <p />
+        <a
+          href="https://dev.uniresolver.io/"
+          target="did uniresolver"
+          rel="noopener noreferrer"
+        >
+          DID Universal Resolver {'<'}- click here
         </a>
       </footer>
     </div>

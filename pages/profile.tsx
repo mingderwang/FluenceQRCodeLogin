@@ -3,36 +3,25 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { EthereumAuthProvider, SelfID } from '@self.id/web'
 declare let window: any
-const Home: NextPage = () => {
+const Profile: NextPage = () => {
   const [did, setDid] = useState('')
-  const [name, setName] = useState('')
+  const [myName, setMyName] = useState('')
 
-  const buttonHandler = async () => {
+  const saveMyName = async () => {
     console.log('onClick')
     const addresses = await window.ethereum.enable()
     // "local" | "mainnet-gateway" | "testnet-clay" | "testnet-clay-gateway"
     // https://developers.ceramic.network/learn/networks/
-    SelfID.authenticate({
+    const self = await SelfID.authenticate({
       authProvider: new EthereumAuthProvider(window.ethereum, addresses[0]),
       ceramic: 'testnet-clay',
       connectNetwork: 'testnet-clay',
-    }).then(async (did: SelfID) => {
-      setDid(did.id)
-      saveLocalStorage(did.id)
-      const ming = await did.get('basicProfile')
-      if (ming.name !== 'undefined') {
-        console.log(ming)
-        setName(ming.name)
-        saveLocalStorageMyName(ming.name)
-      }
     })
-    //await self.set('basicProfile', { name: 'Ming-der Wang' })
-  }
-  function saveLocalStorage(x: string) {
-    localStorage.mydid = x
+    await self.set('basicProfile', { name: myName })
+    saveLocalStorageMyName(myName)
   }
 
-  function getLocalStorage(): string {
+  function getLocalStorageDID(): string {
     const x = localStorage.getItem('mydid')
     return x ? x : ''
   }
@@ -48,9 +37,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     console.log('onStart')
-    setDid(getLocalStorage())
-    setName(getLocalStorageMyName())
-    buttonHandler() // if necessary
+    setDid(getLocalStorageDID())
+    setMyName(getLocalStorageMyName())
   }, [])
 
   return (
@@ -61,13 +49,24 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button
-        onClick={buttonHandler}
-        className="btn btn-secondary rounded-full"
-      >
-        get my did info
-      </button>
-      <p>{did}</p>
+      <p>My DID: {did}</p>
+      <p>My name: {myName}</p>
+
+      <div className="row">
+        <label className="label bold h-24">Update My Name</label>
+        <input
+          className="input input-lg"
+          type="text"
+          onChange={(e) => setMyName(e.target.value)}
+          value={myName}
+        />
+      </div>
+      <div className="row">
+        <button className="btn btn-hello" onClick={saveMyName}>
+          save
+        </button>
+      </div>
+
       <footer className="primary">
         <a
           href="https://muzamint.com"
@@ -92,10 +91,9 @@ const Home: NextPage = () => {
         >
           🐝 Click here -{'>'} Be your self
         </a>
-        <h1>my name is {name}</h1>
       </footer>
     </div>
   )
 }
 
-export default Home
+export default Profile

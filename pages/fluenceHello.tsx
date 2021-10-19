@@ -10,6 +10,7 @@ const relayNodes = [krasnodar[0], krasnodar[1], krasnodar[2]]
 
 const Home: NextPage = () => {
   const [did, setDid] = useState('')
+  const [myName, setMyName] = useState('')
   const [isConnected, setIsConnected] = useState<boolean>(false)
   const [helloMessage, setHelloMessage] = useState<string | null>(null)
   const [peerIdInput, setPeerIdInput] = useState<string>('')
@@ -25,8 +26,8 @@ const Home: NextPage = () => {
       // HelloPeer.hello(%init_peer_id%)
       registerHelloPeer({
         hello: (from: string) => {
-          setHelloMessage('Hello from: \n' + from)
-          return 'Hello back to you, \n' + from
+          setHelloMessage(`Hello from: ${myName}, DID: ${did}\n`)
+          return `Hello back to you ${myName}, DID: ${did}, \n`
         },
       })
       const x: PeerStatus = Fluence.getStatus()
@@ -47,24 +48,16 @@ const Home: NextPage = () => {
     console.log('res', res)
     setHelloMessage(res)
   }
-  const buttonHandler = async () => {
-    console.log('onClick')
-    const addresses = await window.ethereum.enable()
-    // "local" | "mainnet-gateway" | "testnet-clay" | "testnet-clay-gateway"
-    // https://developers.ceramic.network/learn/networks/
-    SelfID.authenticate({
-      authProvider: new EthereumAuthProvider(window.ethereum, addresses[0]),
-      ceramic: 'testnet-clay',
-      connectNetwork: 'testnet-clay',
-    }).then(async (did: SelfID) => {
-      setDid(did.id)
-      const ming = await did.get('basicProfile')
-      console.log(ming)
-    })
-    //await self.set('basicProfile', { name: 'Ming-der Wang' })
-  }
+
   useEffect(() => {
     console.log('onStart')
+    const x: string | null = localStorage.getItem('mydid')
+    setDid(x ? x : '')
+    if (typeof x === 'undefined') {
+      alert('please login with Self.ID first.')
+    }
+    const myname = localStorage.getItem('myName')
+    setMyName(myname ? myname : '')
   }, [])
 
   return (
@@ -74,8 +67,9 @@ const Home: NextPage = () => {
         <meta name="description" content="Sefl.ID login FLuence Service" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <h2>Pick a relay</h2>
+      <h1>{myName}</h1>
+      <h1>my DID: {did}</h1>
+      <h1 className="mb-5 text-5xl font-bold">Pick a relay</h1>
       <ul>
         {relayNodes.map((x) => (
           <li key={x.peerId}>

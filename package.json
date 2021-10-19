@@ -17,7 +17,7 @@
     "@fluencelabs/fluence-network-environment": "^1.0.10",
     "@self.id/web": "^0.1.0",
     "daisyui": "^1.14.3",
-    "next": "11.1.2",
+    "next": "11.1.2-canary.0",
     "react": "^17.0.2",
     "react-dom": "17.0.2"
   },
